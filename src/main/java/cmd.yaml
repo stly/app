@@ -1,0 +1,51 @@
+#cmd.yaml
+page:
+-
+  name: 1MainRun
+  cmds:
+  -
+    sn: 1
+    plAddr: 4WUB8332
+    sname: 系数44 #触屏变量名称
+    unit: 
+    desc:
+      -
+        name: 3.3kv
+        value: 13107
+      -
+        name: 6kv
+        value: 26214
+      -
+        name: 10kv12串
+        value: 43690
+      -
+        name: 10kv11串
+        value: 39321
+      -
+        name: 35kv38串
+        value: 52428
+
+-
+  name: 2MainRun
+  cmds:
+  -
+    sn: 2
+    plAddr: 4WUB8332++++
+    sname: 系数44 #触屏变量名称
+    unit: 
+    desc:
+      -
+        name: 3.3kv
+        value: 13107
+      -
+        name: 6kv
+        value: 26214
+      -
+        name: 10kv12串
+        value: 43690
+      -
+        name: 10kv11串
+        value: 39321
+      -
+        name: 35kv38串
+        value: 52428
