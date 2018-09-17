@@ -38,6 +38,8 @@ public class Test {
 			out.write(cmd.getCmdBytes());
 			DataInputStream in = new DataInputStream(client.getInputStream());
 			String res = in.readUTF();
+			cmd.setByteData(res);
+			cmdInfo.showDesc(cmd.getRealData());
 			System.out.println("server response:" + res);
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -99,9 +101,20 @@ public class Test {
     	//3D FF
     	String s = "020100000008";
     	
-    	int i = ModbusCRC16.crc16_ccitt_modbus(StringUtil.hexStr2BinArr(s));
-    	System.out.println(Integer.toHexString(i));
-		String[] crcStrs =  Crc32.splitCrc(StringUtil.hexStr2BinArr(s));
-		System.err.println(crcStrs[0] + "--" + crcStrs[1]);
+//    	int i = ModbusCRC16.crc16_ccitt_modbus(StringUtil.hexStr2BinArr(s));
+//    	System.out.println(Integer.toHexString(i));
+//		String[] crcStrs =  Crc32.splitCrc(StringUtil.hexStr2BinArr(s));
+//		System.err.println(crcStrs[0] + "--" + crcStrs[1]);
+		//返回 02 01 01 05 91CF
+		//返回 02 03 02 00 6C FC 69
+		
+		s = "020302006CFC69";
+		String countH = s.substring(4, 6);
+		String dataH = s.substring(6, 6 + 2*Integer.parseInt(countH, 16));
+		System.out.println(StringUtil.hex2Integer(dataH));
+		s = "020302006C";
+		Integer i = ModbusCRC16.crc16_ccitt_modbus(StringUtil.hexStr2BinArr(s));
+		System.out.println(Integer.toHexString(i));
     }
+	
 }

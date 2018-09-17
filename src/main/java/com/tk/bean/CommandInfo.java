@@ -82,4 +82,20 @@ public class CommandInfo {
 				+ "]";
 	}
 	
+	/**
+	 * 
+	 * @desc  获取实际展示的文字信息 
+	 * @param value
+	 * @return
+	 *
+	 */
+	public String showDesc(Integer value){
+		for (Map<String, String> d : desc) {
+			if(d.get("value").equals(value)){
+				return d.get("name");
+			}
+		}
+		return null;
+	}
+	
 }

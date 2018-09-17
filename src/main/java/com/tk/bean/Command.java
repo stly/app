@@ -1,5 +1,9 @@
 package com.tk.bean;
 
+import java.awt.HeadlessException;
+
+import org.junit.Test;
+
 import com.tk.util.StringUtil;
 
 /**
@@ -144,4 +148,20 @@ public class Command {
     	byte[] crcByte = StringUtil.hexStr2BinArr(crc);
     	return crcByte;
     }
+
+    /**
+     * 
+     * @desc  获取返回数据中实际值 
+     * @return
+     *
+     */
+    public Integer getRealData(){
+    	//返回 02 01 01 05 91CF
+		//返回 02 03 02 00 6C FC 69
+//    	byteData
+    	String countH = byteData.substring(4, 6);
+    	String dataH = byteData.substring(6, 6+Integer.parseInt(countH, 16));
+    	return StringUtil.hex2Integer(dataH);
+    }
+    
 }
