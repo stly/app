@@ -30,7 +30,7 @@ page:
   cmds:
   -
     sn: 2
-    plAddr: 4WUB8332++++
+    plAddr: 4WUB8332
     sname: 系数44 #触屏变量名称
     unit: 
     desc:

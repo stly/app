@@ -1,5 +1,7 @@
 package com.tk.util;
 
+import com.tk.bean.CmdType;
+
 public class StringUtil {
 
 	private static String hexStr =  "0123456789ABCDEF"; 
@@ -75,5 +77,44 @@ public class StringUtil {
 	     */  
 	    public static String hexStr2BinStr(String hexString){
 	        return bytes2BinStr(hexStr2BinArr(hexString));
+	    }
+	    
+	    /**
+	     * 
+	     * @desc   16进制转为十进制
+	     * @param hexString
+	     * @return
+	     *
+	     */
+	    public static Integer hex2Integer(String hexString){
+	    	return Integer.parseInt(hexString, 16);
+	    }
+	    
+	    	    
+	    /**
+	     * 
+	     * @desc   判断是遥测还是遥信
+	     * @param addr
+	     * @return
+	     *
+	     */
+	    static String[] YxRanges = {"0000", "0027"};
+	    static String[] YcRanges = {"1000", "1027"}; 
+	    public static CmdType getCmdtype(String addr){
+	    	Integer[] yxRanges = {StringUtil.hex2Integer(YxRanges[0]), StringUtil.hex2Integer(YxRanges[1])};
+	    	Integer[] ycRanges = {StringUtil.hex2Integer(YcRanges[0]), StringUtil.hex2Integer(YcRanges[1])};
+	    	Integer value = hex2Integer(addr);
+	    	//
+	    	if(isInRange(value, yxRanges)){
+	    		return CmdType.YX;
+	    	}else if(isInRange(value, ycRanges)){
+	    		return CmdType.YC;
+	    	}else{
+	    		return null;
+	    	}
+	    }
+	    
+	    public static boolean isInRange(Integer value, Integer[] ranges){
+	    	return value >= ranges[0] && value <= ranges[1];
 	    }
 }
