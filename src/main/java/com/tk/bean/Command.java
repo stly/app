@@ -38,7 +38,7 @@ public class Command {
 	}
 	private void init(){
 		smAddr = "02";
-		functionCode = "01";
+//		functionCode = "01";
 	}
 	public String getSmAddr() {
 		return smAddr;
@@ -110,6 +110,11 @@ public class Command {
 	 *
 	 */
 	public String cmd(){
+		if(cmdType == CmdType.YX){
+			functionCode = "01";
+		}else{
+			functionCode = "03";
+		}
 		StringBuffer cmd = new StringBuffer();
 		cmd.append(smAddr).append(functionCode).append(beginAddr)
 		.append(readCount).append(crcLowPosition).append(crcHighPosition);

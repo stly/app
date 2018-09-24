@@ -98,8 +98,8 @@ public class StringUtil {
 	     * @return
 	     *
 	     */
-	    static String[] YxRanges = {"0000", "0027"};
-	    static String[] YcRanges = {"1000", "1027"}; 
+	    static String[] YxRanges = {"0000", "0060"};
+	    static String[] YcRanges = {"1000", "5285"}; 
 	    public static CmdType getCmdtype(String addr){
 	    	Integer[] yxRanges = {StringUtil.hex2Integer(YxRanges[0]), StringUtil.hex2Integer(YxRanges[1])};
 	    	Integer[] ycRanges = {StringUtil.hex2Integer(YcRanges[0]), StringUtil.hex2Integer(YcRanges[1])};

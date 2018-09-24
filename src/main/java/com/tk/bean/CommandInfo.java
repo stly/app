@@ -68,8 +68,10 @@ public class CommandInfo {
 		cmd.setCmdType(cmdType);
 		if(cmdType == CmdType.YX){
 			cmd.setReadCount("0008");
+			cmd.setFunctionCode("01");
 		}else{
 			cmd.setReadCount("0001");
+			cmd.setFunctionCode("03");
 		}
 		String crcStr = Integer.toHexString(ModbusCRC16.crc16_ccitt_modbus(cmd.getCRCByte()));
 		cmd.setCrcLowPosition(crcStr.substring(2));

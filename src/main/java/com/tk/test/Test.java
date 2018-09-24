@@ -22,27 +22,35 @@ public class Test {
 	public static void main(String[] args) {
 				
 		// send data by socket
-		String serverName = null;
-		Integer port = null;
+		String serverName = "10.10.100.254";
+		Integer port = 8899;
 		String[] cmdIds = {"2MainRun","2"};
 		CommandInfo cmdInfo = CmdUtil.getCmdInfoBy(cmdIds);
 		System.out.println("cmdInfo: " + cmdInfo.toString());
 		Command cmd = cmdInfo.getCmd();
 		System.out.println("beginAddr--->" + cmd.getBeginAddr());
-		System.out.println("cmd--->" + StringUtil.bin2HexStr(cmd.getCmdBytes()));
+//		System.out.println("cmd--->" + StringUtil.bin2HexStr(cmd.getCmdBytes()));
+//		System.out.println("cmd--->" + cmd.cmd());
 		 try {
 			Socket client = new Socket(serverName, port);
 //			OutputStream out = client.getOutputStream();
+			System.out.println("RemoteSocketAddress--->" + client.getRemoteSocketAddress());
 			DataOutputStream out =  new DataOutputStream(client.getOutputStream());
 			//TODO send byte data
-			out.write(cmd.getCmdBytes());
+//			out.write(cmd.getCmdBytes());
+//			out.write(StringUtil.hexStr2BinArr("0203208B0001FFD3"));;
+//			out.write(StringUtil.hexStr2BinArr("0101000000103DC6"));;
+			out.write(StringUtil.hexStr2BinArr("02031000000180F9"));;
 			DataInputStream in = new DataInputStream(client.getInputStream());
-			String res = in.readUTF();
-			cmd.setByteData(res);
-			cmdInfo.showDesc(cmd.getRealData());
-			System.out.println("server response:" + res);
+			byte[] buf = new byte[20];
+			int i = in.read(buf);
+			System.out.println("buf--->" + StringUtil.bin2HexStr(buf));
+//			cmd.setByteData(res);
+			String showDesc = cmdInfo.showDesc(cmd.getRealData());
+			System.out.println("develop--->" + showDesc);
+//			System.out.println("server response:" + res);
 		}catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		
 	}
@@ -109,12 +117,15 @@ public class Test {
 		//返回 02 03 02 00 6C FC 69
 		
 		s = "020302006CFC69";
+		
 		String countH = s.substring(4, 6);
 		String dataH = s.substring(6, 6 + 2*Integer.parseInt(countH, 16));
 		System.out.println(StringUtil.hex2Integer(dataH));
 		s = "020302006C";
 		Integer i = ModbusCRC16.crc16_ccitt_modbus(StringUtil.hexStr2BinArr(s));
 		System.out.println(Integer.toHexString(i));
+		
+		System.out.println(Integer.parseUnsignedInt("8331", 16));
     }
 	
 }

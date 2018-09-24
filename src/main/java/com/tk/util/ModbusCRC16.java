@@ -55,4 +55,11 @@ public class ModbusCRC16 {
     public static int crc16_ccitt_modbus_short(byte[] buf) {
     	return (short)crc16_ccitt_modbus(buf,0,buf.length);
     }
+    
+    public static void main(String[] args) {
+    	String s = "0203208B0001FFF3";
+    	s = "0203208B0001";
+    	int i = crc16_ccitt_modbus(StringUtil.hexStr2BinArr(s));
+    	System.out.println(Integer.toHexString(i));
+	}
 }
