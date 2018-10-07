@@ -160,13 +160,15 @@ public class Command {
      * @return
      *
      */
-    public Integer getRealData(){
+    public String getRealData(){
     	//返回 02 01 01 05 91CF
 		//返回 02 03 02 00 6C FC 69
 //    	byteData
     	String countH = byteData.substring(4, 6);
     	String dataH = byteData.substring(6, 6+Integer.parseInt(countH, 16));
-    	return StringUtil.hex2Integer(dataH);
+    	return dataH;
+//    	this.getCmdType()
+//    	return StringUtil.hex2Integer(dataH);
     }
     
 }

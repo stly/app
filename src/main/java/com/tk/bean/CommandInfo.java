@@ -27,8 +27,16 @@ public class CommandInfo {
 	private String unit;
 	/** 值与对应变量名称 name(变量名称, 如3.3kv) value(值,如13107)**/
 	private List<Map<String, String>> desc;
+	/** 遥信的解析位角标，一个字节中，第一位是最最低位**/
+	private Integer bitIndex;
 	
 	
+	public Integer getBitIndex() {
+		return bitIndex;
+	}
+	public void setBitIndex(Integer bitIndex) {
+		this.bitIndex = bitIndex;
+	}
 	public String getSn() {
 		return sn;
 	}
@@ -78,6 +86,8 @@ public class CommandInfo {
 		cmd.setHighPosition(crcStr.substring(0, 2));
 		return cmd;
 	}
+	
+	
 	@Override
 	public String toString() {
 		return "CommandInfo [sn=" + sn + ", plAddr=" + plAddr + ", sname=" + sname + ", unit=" + unit + ", desc=" + desc
@@ -91,13 +101,43 @@ public class CommandInfo {
 	 * @return
 	 *
 	 */
-	public String showDesc(Integer value){
+	static CmdManager cm;
+	static{
+		cm = CmdManager.getCmdManager();
+	}
+	
+	/**
+	 * 获取该命令的类型（遥信，遥测）
+	 * @return
+	 */
+	public CmdType getCmdType(){
+		String addr = getPlAddr().replaceAll(prefixRegex, "");
+		return StringUtil.getCmdtype(addr);
+	}
+	public String showDesc(){
+		String res;
+		try {
+			Command cmd = this.getCmd();
+			cm.sendCmd(cmd);
+			res = cmd.getRealData();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+		//如果是遥信的需要处理res得到其中需要的某一位的值
+		CmdType type = getCmdType();
+		if(type == CmdType.YX){
+			res = String.valueOf( res.charAt(bitIndex) );
+		}
 		for (Map<String, String> d : desc) {
-			if(d.get("value").equals(value)){
+			// TODO 遥信，返回一个字节8位，其中的某一位是代表一个显示状态
+			if (d.get("value").equals(res)) {
 				return d.get("name");
 			}
 		}
+
 		return null;
 	}
+	
 	
 }

@@ -28,6 +28,8 @@ public class Test {
 		CommandInfo cmdInfo = CmdUtil.getCmdInfoBy(cmdIds);
 		System.out.println("cmdInfo: " + cmdInfo.toString());
 		Command cmd = cmdInfo.getCmd();
+		// send cmd
+		String cmdStr = cmd.cmd();
 		System.out.println("beginAddr--->" + cmd.getBeginAddr());
 //		System.out.println("cmd--->" + StringUtil.bin2HexStr(cmd.getCmdBytes()));
 //		System.out.println("cmd--->" + cmd.cmd());
@@ -46,7 +48,7 @@ public class Test {
 			int i = in.read(buf);
 			System.out.println("buf--->" + StringUtil.bin2HexStr(buf));
 //			cmd.setByteData(res);
-			String showDesc = cmdInfo.showDesc(cmd.getRealData());
+			String showDesc = cmdInfo.showDesc();
 			System.out.println("develop--->" + showDesc);
 //			System.out.println("server response:" + res);
 		}catch (Exception e) {
